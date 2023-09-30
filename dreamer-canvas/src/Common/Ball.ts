@@ -1,6 +1,3 @@
-import {
-    runtimeDecorator,
-} from "./utils"
 export default class Ball{
     x:number;
     y:number;
@@ -32,7 +29,6 @@ export default class Ball{
         return this;
     }
 
-    @runtimeDecorator()
     inBlock(x: number, y:number){
         return Math.sqrt( (x - this.x) ** 2 + (y - this.y) ** 2 ) < this.r; 
     }

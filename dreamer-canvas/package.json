@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "sideEffects": ["./src/**/*"],
   "scripts": {
-    "build": "tsc",
-    "start": "webpack && webpack-dev-server"
+    "build": "webpack --config webpack.prod.js",
+    "start": "webpack --config webpack.dev.js && webpack-dev-server --config webpack.dev.js"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
