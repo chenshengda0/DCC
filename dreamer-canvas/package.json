@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "sideEffects": ["./src/**/*"],
+  "sideEffects": [
+    "./src/**/*"
+  ],
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "start": "webpack --config webpack.dev.js && webpack-dev-server --config webpack.dev.js"
@@ -15,14 +17,21 @@
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.32.2",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.3",
+    "html2canvas": "^1.4.1",
     "terser-webpack-plugin": "^5.3.9",
     "ts-loader": "^9.4.4",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
+    "url-loader": "^4.1.1",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
     "webpack-merge": "^5.9.0"
+  },
+  "dependencies": {
+    "@n.see/gif-parser": "^1.1.0",
+    "libgif": "^0.0.3"
   }
 }

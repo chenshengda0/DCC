@@ -9,6 +9,8 @@
         *{
             margin: 0;
             padding: 0;
+            /*pointer-events: none;*/
+            touch-action: none;
         }
         body{
             min-height: 100vh;
@@ -22,9 +24,25 @@
             top: 50%;
             background: #ee82ee;
         }
+        #showImg{
+            height: 120px;
+        }
     </style>
 </head>
 <body>
+    <img src="./logo.png" alt="" id = "showImg" >
     <div id="canvas"></div>
 </body>
+
+<script>
+    const dom = document.getElementById( "showImg" )
+    window.addEventListener( "dream_canvas_save_img", function(e){
+        dom.src = e.detail.blobURL;
+        console.log( dom )
+    } )
+    window.addEventListener( "dream_canvas_show_color", function(e){
+        console.log( "显示颜色", e )
+    } )
+</script>
+
 </html>

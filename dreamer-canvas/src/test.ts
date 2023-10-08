@@ -1,7 +1,3 @@
-import MoveBall from "./MoveBall"
-import {
-    sleep,
-    runtimeDecorator,
-} from "./Common"
+import CLS from "./D3Scale"
 
-new MoveBall( "canvas" ).render( 30, "green" )
+new CLS("canvas" ).render(  );

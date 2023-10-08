@@ -29,7 +29,7 @@ module.exports = merge(
             static: "devDist",
             open: false,
             compress: true,
-            host: "127.0.0.1",
+            //host: "127.0.0.1",
             hot: true,
             port: 8000,
         },

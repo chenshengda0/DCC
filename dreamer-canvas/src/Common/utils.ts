@@ -6,6 +6,7 @@ export const runtimeDecorator = function():MethodDecorator{
             apply: function(...args){
                 console.log(`============================================================START: ${method} ============================================================`)
                 try{
+                    console.log( "email: ", "chen_shengda@yeah.net" )
                     console.log( "time: ", new Date() );
                     console.log( "args: ", args )
                     return Reflect.apply( ...args )
@@ -19,3 +20,10 @@ export const runtimeDecorator = function():MethodDecorator{
         } )
     }
 } 
+
+export const getRandom = function(arr:number[], isInt:boolean = false ){
+    const min = Math.min( ...arr )
+    const max = Math.max( ...arr )
+    const num = Math.random() * ( max - min ) + min;
+    return isInt ? Math.round( num ) : num;
+}

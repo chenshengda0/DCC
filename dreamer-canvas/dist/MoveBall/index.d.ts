@@ -1,6 +1,6 @@
 export default class MoveBall {
-    container: any;
-    offset: any;
-    constructor(idTab: string);
+    private static container;
+    private static offset;
+    constructor(domID: string);
     render(r?: number, fillStyle?: string): void;
 }
