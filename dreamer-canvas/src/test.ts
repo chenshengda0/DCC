@@ -1,3 +1,3 @@
-import CLS from "./D3Scale"
+import {MatrixMove as CLS} from "./Matrix"
 
 new CLS("canvas" ).render(  );

@@ -2,6 +2,9 @@ import {
     sleep,
     runtimeDecorator,
     getRandom,
+    getAxis,
+    matrix2D,
+    matrix3D,
 } from "./utils"
 import Download from "./Download"
 import Upload from "./Upload"
@@ -16,4 +19,7 @@ export {
     sleep,
     getRandom,
     runtimeDecorator,
+    getAxis,
+    matrix2D,
+    matrix3D,
 }

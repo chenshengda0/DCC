@@ -13,5 +13,6 @@ import Html2Png from "./Html2Png";
 import D3Ball from "./D3Ball";
 import D3Scale from "./D3Scale";
 import Encryption from "./Encryption";
-import { sleep, runtimeDecorator, getRandom } from "./Common";
-export { sleep, getRandom, runtimeDecorator, MoveBall, Hollow, ColorPicker, Monochrome, Binarization, Grayscale, Negative, Clip, ParseGif, Writing, Scale, Html2Png, D3Ball, D3Scale, Encryption, };
+import { MatrixImage, MatrixMove } from "./Matrix";
+import { sleep, runtimeDecorator, getRandom, getAxis, matrix2D, matrix3D } from "./Common";
+export { sleep, getRandom, runtimeDecorator, getAxis, matrix2D, matrix3D, MoveBall, Hollow, ColorPicker, Monochrome, Binarization, Grayscale, Negative, Clip, ParseGif, Writing, Scale, Html2Png, D3Ball, D3Scale, Encryption, MatrixImage, MatrixMove, };

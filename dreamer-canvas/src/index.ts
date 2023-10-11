@@ -14,15 +14,25 @@ import D3Ball from "./D3Ball"
 import D3Scale from "./D3Scale"
 import Encryption from "./Encryption"
 import {
+    MatrixImage,
+    MatrixMove,
+} from "./Matrix"
+import {
     sleep,
     runtimeDecorator,
     getRandom,
+    getAxis,
+    matrix2D,
+    matrix3D,
 } from "./Common"
 
 export {
     sleep,
     getRandom,
     runtimeDecorator,
+    getAxis,
+    matrix2D,
+    matrix3D,
     MoveBall,
     Hollow,
     ColorPicker,
@@ -38,4 +48,6 @@ export {
     D3Ball,
     D3Scale,
     Encryption,
+    MatrixImage,
+    MatrixMove,
 }
