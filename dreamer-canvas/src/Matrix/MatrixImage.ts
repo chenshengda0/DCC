@@ -1,11 +1,8 @@
 import {
     Upload,
     Download,
-    ScaleUp,
-    ScaleDown,
-    //计算矩阵
-    getAxis,
     matrix2D,
+    runtimeDecorator,
 } from "../Common"
 
 class ShowImage{
@@ -53,6 +50,7 @@ export default class MatrixImage{
         MatrixImage.offset = MatrixImage.container.getBoundingClientRect()
     }
 
+    @runtimeDecorator()
     render(angel:number = 5){
         const radian =  angel % 360 / 180 * Math.PI;
         const canvas = document.createElement( "canvas" )

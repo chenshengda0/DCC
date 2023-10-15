@@ -1,3 +1,3 @@
-import {MatrixMove as CLS} from "./Matrix"
+import { GameMove as CLS } from "./Game"
 
 new CLS("canvas" ).render(  );

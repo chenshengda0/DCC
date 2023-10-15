@@ -1,3 +1,4 @@
 import MatrixMove from "./MatrixMove";
 import MatrixImage from "./MatrixImage";
-export { MatrixMove, MatrixImage, };
+import MyTest from "./MyTest";
+export { MatrixMove, MatrixImage, MyTest, };

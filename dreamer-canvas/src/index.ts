@@ -18,12 +18,20 @@ import {
     MatrixMove,
 } from "./Matrix"
 import {
+    Game,
+    GameBG,
+    GameMove,
+} from "./Game"
+import {
     sleep,
     runtimeDecorator,
     getRandom,
     getAxis,
     matrix2D,
     matrix3D,
+    getAve,
+    getGray,
+    invert,
 } from "./Common"
 
 export {
@@ -33,6 +41,10 @@ export {
     getAxis,
     matrix2D,
     matrix3D,
+    getAve,
+    getGray,
+    invert,
+    
     MoveBall,
     Hollow,
     ColorPicker,
@@ -50,4 +62,7 @@ export {
     Encryption,
     MatrixImage,
     MatrixMove,
+    Game,
+    GameBG,
+    GameMove,
 }

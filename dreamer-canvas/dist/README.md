@@ -28,6 +28,20 @@ export default class Parent {
 
     //返回 canvas setTransform参数数组，另外 setTransform 与 css3 matrix参数一致
     export declare const matrix2D: (source: number[][]) => number[];
+
+    //计算数组平均值与和
+    export declare const getAve: (source: number[]) => {
+        source: number[];
+        count: number;
+        sum: number;
+        ave: number;
+    };
+
+    //计算rgba灰度值
+    export declare const getGray: (rgba: number[]) => number;
+
+    //求(3*3, 4*4)逆矩阵( 借鉴 https://github.com/mrdoob/three.js.git )
+    export declare const invert: (source: number[][]) => number[][];
 ```
 
 
@@ -130,4 +144,20 @@ export default class Parent {
 ### 使用内置矩阵实现图片2D错切( MatrixImage )
 ```
     new MatrixImage( "canvas" ).render( -5 )
+```
+
+### 动态背景( Game )
+```
+    new Game( "canvas" ).render()
+```
+
+### 背景无限循环（ GameBG ）
+```
+    new GameBG( "canvas" ),render()
+```
+
+
+### 可交互动画( GameMove )
+```
+    new GameMove( "canvas" ).render()
 ```
