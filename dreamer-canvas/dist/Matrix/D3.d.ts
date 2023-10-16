@@ -1,6 +1,6 @@
-export default class Animation {
+export default class D3 {
     private static container;
     private static offset;
     constructor(domID: string);
-    render(): void;
+    render(axis?: "x" | "X" | "y" | "Y" | "z" | "Z"): void;
 }

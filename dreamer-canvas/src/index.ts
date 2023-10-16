@@ -16,12 +16,15 @@ import Encryption from "./Encryption"
 import {
     MatrixImage,
     MatrixMove,
+    Animation,
+    D3,
 } from "./Matrix"
 import {
     Game,
     GameBG,
     GameMove,
 } from "./Game"
+
 import {
     sleep,
     runtimeDecorator,
@@ -65,4 +68,7 @@ export {
     Game,
     GameBG,
     GameMove,
+
+    Animation,
+    D3,
 }

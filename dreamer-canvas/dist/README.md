@@ -161,3 +161,13 @@ export default class Parent {
 ```
     new GameMove( "canvas" ).render()
 ```
+
+### 帧动画(Animation)
+```
+    new Animation( "canvas" ).render()
+```
+
+### 3D动画( 绕x、y、z轴旋转 )
+```
+    new D3( "canvas" ).render()
+```

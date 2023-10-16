@@ -1,3 +1,3 @@
-import { GameMove as CLS } from "./Game"
+import { D3 as CLS } from "./Matrix"
 
-new CLS("canvas" ).render(  );
+new CLS("canvas" ).render();
