@@ -13,3 +13,5 @@ export declare const getAve: (source: number[]) => {
 export declare const getGray: (rgba: number[]) => number;
 export declare const invert: (source: number[][]) => number[][];
 export declare const impact: (b0: any, b1: any) => void;
+export declare const determinant: (source: number[][]) => number;
+export declare const adjoint: (source: number[][]) => number[][];

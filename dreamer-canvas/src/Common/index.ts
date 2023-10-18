@@ -9,6 +9,8 @@ import {
     getGray,
     invert,
     impact,
+    determinant, //行列式
+    adjoint,     // 伴随矩阵
 } from "./utils"
 import Download from "./Download"
 import Upload from "./Upload"
@@ -40,4 +42,6 @@ export {
     getGray,
     invert,
     impact,
+    determinant,
+    adjoint,
 }

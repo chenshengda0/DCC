@@ -35,6 +35,10 @@ import {
     getAve,
     getGray,
     invert,
+
+    impact,
+    adjoint,
+    determinant,
 } from "./Common"
 
 export {
@@ -47,6 +51,10 @@ export {
     getAve,
     getGray,
     invert,
+
+    impact,
+    adjoint,
+    determinant,
     
     MoveBall,
     Hollow,

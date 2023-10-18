@@ -42,6 +42,15 @@ export default class Parent {
 
     //求(3*3, 4*4)逆矩阵( 借鉴 https://github.com/mrdoob/three.js.git )
     export declare const invert: (source: number[][]) => number[][];
+
+    //圆球碰撞检测(2d 旋转)
+    export declare const impact: (b0: any, b1: any) => void;
+
+    //自定义计算矩阵行列式
+    export declare const determinant: (source: number[][]) => number;
+    
+    //自定义计算伴随矩阵 A<sup>-1</sup>A<sup>*</sup> = ｜A｜ (逆矩阵 = 伴随矩阵 / 矩阵行列式) 类似使用导数求除法
+    export declare const adjoint: (source: number[][]) => number[][];
 ```
 
 
@@ -171,3 +180,4 @@ export default class Parent {
 ```
     new D3( "canvas" ).render()
 ```
+

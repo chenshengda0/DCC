@@ -253,6 +253,8 @@ export const invert = (source:number[][]) => {
     }
 }
 
+
+//碰撞检测
 export const impact = function(b0:any, b1:any){
     const dist = Math.sqrt( (b1["matrix"][1][3] - b0["matrix"][1][3]) ** 2 + (b1["matrix"][0][3] - b0["matrix"][0][3]) ** 2 )
     if( dist >= b1["R"] + b0["R"] ) return ;
@@ -301,4 +303,141 @@ export const impact = function(b0:any, b1:any){
     b0.diretion *= -1
     b1.diretion *= -1
     return ;
+}
+
+//计算n*n方阵行列式值(拉普拉斯展开)
+export const determinant = function(source:number[][]){
+    if( source.length !== source[0].length || source.length <= 0) throw new Error( "请输入n*n矩阵" )
+    const n = source.length;
+    switch( true ){
+        case n <= 0:
+            throw new Error( "请输入n*n方阵" )
+        case n === 1:
+            return source[0][0];
+        case n === 2:
+            return source[0][0] * source[1][1] - source[1][0] * source[0][1];
+        case n === 3:
+            let three = 0;
+            const one = Array.from( {length: n}, ()=>Array.from({length: n<<1}, ()=>0) )
+            for( let i = 0; i < n; ++i ){
+                for( let j = 0; j < (n<<1); ++j ){
+                    if( j < n ){
+                        one[i][j] = source[i][j]
+                    }else{
+                        one[i][j] = source[i][j % n]
+                    }
+                }
+            }
+            //console.log( one )
+            for( let col = 0; col < n; ++col ){
+                const DFS = function(c:number = 0, r:number = 0, current:number = 1):number{
+                    switch( true ){
+                        case r >= n:
+                            return current;
+                        default:
+                            return DFS( c + 1, r + 1, current * one[r][c] )
+                    }
+                }
+                const current = DFS( col )
+                three += current;
+                //console.log( current, three )
+            }
+
+            for( let col = n; col < n<<1; ++col ){
+                const DFS = function(c:number = 0, r:number = 0, current:number = 1):number{
+                    switch( true ){
+                        case r >= n:
+                            return current;
+                        default:
+                            return DFS( c - 1, r + 1, current * one[r][c] )
+                    }
+                }
+                const current = DFS( col )
+                three -= current;
+                
+            }
+            //console.log( source, three )
+            return three;
+        default:
+            let four = 0;
+            const first = [ ...source[0] ]
+            for( let i = 0; i < first.length; ++i ){
+                if( (i&1) === 1 ){
+                    four -= new Proxy( function*(index:number){
+                        for( let r = 1; r < n; ++r ){
+                            const current = []
+                            for( let c = 0; c < n; ++c ){
+                                if( c !== index ) current.push( source[r][c] )
+                            }
+                            yield current;
+                        }
+                    }, {apply: (...args)=>{
+                        const result = [...Reflect.apply(...args)]
+                        return determinant( result );
+                    }} )( i ) as unknown as number * first[i];
+                }else{
+                    four += new Proxy( function*(index:number){
+                        for( let r = 1; r < n; ++r ){
+                            const current = []
+                            for( let c = 0; c < n; ++c ){
+                                if( c !== index ) current.push( source[r][c] )
+                            }
+                            yield current;
+                        }
+                    }, {apply: (...args)=>{
+                        const result = [...Reflect.apply(...args)]
+                        return determinant( result );
+                    }} )( i ) as unknown as number * first[i];
+                }
+            }
+            //console.log( source, four )
+            return four;
+    }
+}
+
+//计算伴随矩阵
+export const adjoint = function(source:number[][]){
+    if( source.length !== source[0].length || source.length < 2 ) throw new Error( "请输入n*n矩阵" )
+    const n = source.length;
+    switch( true ){
+        case n === 2:
+            //主对调，副取反
+            const two = Array.from( {length:n}, ()=>Array.from( {length:n}, ()=>0 ) )
+            two[0][0] = source[1][1];
+            two[0][1] = -source[0][1];
+            two[1][0] = -source[1][0];
+            two[1][1] = source[0][0];
+            return two;
+        default:
+            const one = Array.from( {length: (n<<1) - 1}, ()=>Array.from( {length: (n<<1) - 1}, ()=>0 ) )
+            for( let i = 0; i < n; ++i ){
+                for( let j = 0; j < n; ++j ){
+                    one[i][j] = source[i][j]
+                }
+            }
+            for( let i = 0; i < n; ++i ){
+                for( let j = n; j < (n<<1) - 1; ++j ){
+                    one[i][j] = source[i][j % n]
+                }
+            }
+            for( let c = n; c < (n<<1) - 1; ++c ){
+                one[c] = [ ...one[c%n] ]
+            }
+            //console.log( "one: ", one )
+            const target = Array.from( {length: n}, ()=> Array.from( {length: n}, ()=>0 ) )
+            for( let i = 1; i <= n; ++i ){
+                for( let j = 1; j <= n; ++ j ){
+                    const current = Array.from( {length: n -1}, ()=> Array.from( {length: n - 1}, ()=>0 ) )
+                    for( let row = 0; row < n-1; ++row ){
+                        for( let col = 0; col < n-1; ++col ){
+                            current[row][col] = one[i+row][j+col]
+                        }
+                    }
+                    target[i-1][j-1] = determinant( current )
+                }
+            }
+            //console.log( "伴随矩阵", T(target) )
+            return T(target);
+    }
+
 }

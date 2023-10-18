@@ -1,3 +1,3 @@
-import { D3 as CLS } from "./Matrix"
+import { Move as CLS } from "./Matrix"
 
 new CLS("canvas" ).render();
