@@ -67,6 +67,8 @@ export default class Parent {
     } )
 ```
 
+## canvas 2D
+
 ### 拖拽( MoveBall )
 
 ```
@@ -179,5 +181,12 @@ export default class Parent {
 ### 3D动画( 绕x、y、z轴旋转 )
 ```
     new D3( "canvas" ).render()
+```
+
+## webGL
+
+### 立方体旋转动画( WebGLRect(点光源) )
+```
+    new WebGLRect("canvas").render()
 ```
 

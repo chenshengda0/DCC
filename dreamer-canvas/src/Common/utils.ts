@@ -63,6 +63,7 @@ export const getAxis = function(left:number[][], right:number[][] = [[0],[0],[0]
     } )() as unknown as number[][];
 }
 
+//获取4*4方阵
 export const matrix3D = function(source:number[][]){
     if( source.length !== 4 || source[0].length !== 4 ) throw new Error("请输入4*4矩阵")
     const tSource = T( source )
@@ -78,7 +79,7 @@ export const matrix3D = function(source:number[][]){
             return [...Reflect.apply(...args)]
         }
     } )() as unknown as number[];
-    return `matrix3d(${target.join(",")})`
+    return target;
 }
 
 export const matrix2D = function( source:number[][] ):number[]{

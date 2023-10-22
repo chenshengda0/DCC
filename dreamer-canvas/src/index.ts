@@ -18,6 +18,7 @@ import {
     MatrixMove,
     Animation,
     D3,
+    WebGLRect,
 } from "./Matrix"
 import {
     Game,
@@ -73,6 +74,7 @@ export {
     Encryption,
     MatrixImage,
     MatrixMove,
+    WebGLRect,
     Game,
     GameBG,
     GameMove,
