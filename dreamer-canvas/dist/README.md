@@ -190,3 +190,18 @@ export default class Parent {
     new WebGLRect("canvas").render()
 ```
 
+### 图片纹理( GLImage )
+```
+    new GLImage("canvas").render()
+```
+
+
+### 透视图( WebGLTest )
+```
+    new WebGLTest("canvas").render()
+```
+
+
+
+
+

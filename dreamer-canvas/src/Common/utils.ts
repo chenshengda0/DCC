@@ -442,3 +442,131 @@ export const adjoint = function(source:number[][]){
     }
 
 }
+
+//透视矩阵
+export function frustum(left:number = -180, right:number = 180, bottom:number = -300, top:number = 300, near:number = -200, far:number = 200) {
+    let rl = 1 / (right - left);
+    let tb = 1 / (top - bottom);
+    let nf = 1 / (near - far);
+    const out = Array.from( {length:16}, ()=>0 )
+    out[0] = near * 2 * rl;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[5] = near * 2 * tb;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = (right + left) * rl;
+    out[9] = (top + bottom) * tb;
+    out[10] = (far + near) * nf;
+    out[11] = -1;
+    out[12] = 0;
+    out[13] = 0;
+    out[14] = far * near * 2 * nf;
+    out[15] = 0;
+    //转二维矩阵
+    return new Proxy( function*(){
+        //翻转
+        out.reverse()
+        while( out.length > 0 ){
+            const current = []
+            for( let i = 0; i < 4; ++i ){
+                current.push( out.pop() )
+            }
+            yield current;
+        }
+    }, {
+        apply(...args){
+            const GEN = Reflect.apply( ...args )
+            const ANS = [...GEN]
+            return T(ANS);
+        }
+    } )() as unknown as number[][]
+}
+
+export function orthoNO(left:number, right:number, bottom:number, top:number, near:number, far:number) {
+    const lr = 1 / (left - right);
+    const bt = 1 / (bottom - top);
+    const nf = 1 / (near - far);
+    const out = Array.from( {length:16}, ()=>0 )
+    out[0] = -2 * lr;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[5] = -2 * bt;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = 2 * nf;
+    out[11] = 0;
+    out[12] = (left + right) * lr;
+    out[13] = (top + bottom) * bt;
+    out[14] = (far + near) * nf;
+    out[15] = 1;
+    //转二维矩阵
+    return new Proxy( function*(){
+        //翻转
+        out.reverse()
+        while( out.length > 0 ){
+            const current = []
+            for( let i = 0; i < 4; ++i ){
+                current.push( out.pop() )
+            }
+            yield current;
+        }
+    }, {
+        apply(...args){
+            const GEN = Reflect.apply( ...args )
+            const ANS = [...GEN]
+            return T(ANS);
+        }
+    } )() as unknown as number[][]
+  }
+
+export function perspectiveNO(fovy:number, aspect:number, near:number, far:number) {
+    const f = 1.0 / Math.tan(fovy / 2);
+    const out = Array.from( {length:16}, ()=>0 )
+    out[0] = f / aspect;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[5] = f;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[11] = -1;
+    out[12] = 0;
+    out[13] = 0;
+    out[15] = 0;
+    if (far != null && far !== Infinity) {
+      const nf = 1 / (near - far);
+      out[10] = (far + near) * nf;
+      out[14] = 2 * far * near * nf;
+    } else {
+      out[10] = -1;
+      out[14] = -2 * near;
+    }
+    //转二维矩阵
+    return new Proxy( function*(){
+        //翻转
+        out.reverse()
+        while( out.length > 0 ){
+            const current = []
+            for( let i = 0; i < 4; ++i ){
+                current.push( out.pop() )
+            }
+            yield current;
+        }
+    }, {
+        apply(...args){
+            const GEN = Reflect.apply( ...args )
+            const ANS = [...GEN]
+            return T(ANS);
+        }
+    } )() as unknown as number[][]
+}

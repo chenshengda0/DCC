@@ -15,3 +15,6 @@ export declare const invert: (source: number[][]) => number[][];
 export declare const impact: (b0: any, b1: any) => void;
 export declare const determinant: (source: number[][]) => number;
 export declare const adjoint: (source: number[][]) => number[][];
+export declare function frustum(left?: number, right?: number, bottom?: number, top?: number, near?: number, far?: number): number[][];
+export declare function orthoNO(left: number, right: number, bottom: number, top: number, near: number, far: number): number[][];
+export declare function perspectiveNO(fovy: number, aspect: number, near: number, far: number): number[][];

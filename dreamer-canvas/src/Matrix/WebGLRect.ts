@@ -4,6 +4,8 @@ import {
     getRandom,
     getAve,
     matrix3D,
+    frustum,
+    perspectiveNO,
 } from "../Common"
 
 class ShowImage{
@@ -27,7 +29,7 @@ class ShowImage{
             //光源位置
             vec3 u_lightPosition = normalize( vec3(0, 0, 1) );
             //逐顶点法向量矩阵变换
-            vec3 normal = normalize( (proj*a_normal).xyz );
+            vec3 normal = normalize( (proj * a_normal).xyz );
             //点光源向量
             vec3 lightDirection = normalize( vec3(gl_Position) - u_lightPosition );
             //与法向量余弦值
@@ -49,28 +51,28 @@ class ShowImage{
         }
     `
     private static localPoints:number[] = [
-        100, 100, 100, 1,
+        50, 50, -100, 1,
         1, 0, 0, 1,
 
-        100, -100, 100, 1,
+        50, -50, -100, 1,
         1, 0, 0, 1,
 
-        -100, -100, 100, 1,
+        -50, -50, -100, 1,
         1, 0, 0, 1,
 
-        -100, 100, 100, 1,
+        -50, 50, -100, 1,
         1, 0, 0, 1,
 
-        100, 100, -100, 1,
+        50, 50, -200, 1,
         1, 0, 0, 1,
 
-        100, -100, -100, 1,
+        50, -50, -200, 1,
         1, 0, 0, 1,
 
-        -100, -100, -100, 1,
+        -50, -50, -200, 1,
         1, 0, 0, 1,
 
-        -100, 100, -100, 1,
+        -50, 50, -200, 1,
         1, 0, 0, 1,
     ]
     private static localIndex:number[] = [
@@ -147,9 +149,11 @@ class ShowImage{
         //定义参数
         const aPosition = ShowImage.ctx.getAttribLocation( ShowImage.program, "a_position" )
         const uniforproj = ShowImage.ctx.getUniformLocation( ShowImage.program, "proj" )
+        const vist = ShowImage.ctx.getUniformLocation( ShowImage.program, "vist" )
         const a_color = ShowImage.ctx.getAttribLocation( ShowImage.program, "a_color" )
         const a_normal = ShowImage.ctx.getAttribLocation( ShowImage.program, "a_normal" )
         ShowImage.ctx.uniformMatrix4fv(uniforproj, false, matrix3D( this.matrix ));
+        ShowImage.ctx.uniformMatrix4fv(vist, false, matrix3D( this.matrix ));
         //索引缓冲区
         const indexPosition = new Uint8Array( ShowImage.localIndex )
         const indexBuffer = ShowImage.ctx.createBuffer();
@@ -226,9 +230,9 @@ export default  class WebGLRect{
         const W = canvas.width = WebGLRect.container.clientWidth;
         const H = canvas.height = WebGLRect.container.clientHeight;
         const matrix:number[][] = [
-            [2 / W, 0, 0, 0],
-            [0, 2 / H, 0, 0],
-            [0, 0, -2 / 400, 0],
+            [2/W, 0, 0, 0],
+            [0, -2/H, 0, 0],
+            [0, 0, 2/600, 0],
             [0, 0, 0, 1],
         ]
         const wCanvas = new ShowImage({

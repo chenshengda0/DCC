@@ -19,6 +19,8 @@ import {
     Animation,
     D3,
     WebGLRect,
+    GLImage,
+    WebGLTest,
 } from "./Matrix"
 import {
     Game,
@@ -75,6 +77,9 @@ export {
     MatrixImage,
     MatrixMove,
     WebGLRect,
+    WebGLTest,
+    GLImage,
+
     Game,
     GameBG,
     GameMove,
