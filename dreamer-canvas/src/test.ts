@@ -1,3 +1,3 @@
-import { GLImage as CLS } from "./Matrix"
+import { TestMatrix as CLS } from "./Testing"
 
 new CLS("canvas" ).render();

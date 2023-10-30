@@ -11,9 +11,7 @@ import {
     impact,
     determinant, //行列式
     adjoint,     // 伴随矩阵
-    frustum,    //透视矩阵
-    perspectiveNO, //观察点
-    orthoNO,
+    perspectiveNO, //透视矩阵
 } from "./utils"
 import Download from "./Download"
 import Upload from "./Upload"
@@ -47,7 +45,5 @@ export {
     impact,
     determinant,
     adjoint,
-    frustum,
     perspectiveNO,
-    orthoNO,
 }

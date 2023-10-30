@@ -39,6 +39,8 @@ import {
     getGray,
     invert,
 
+    perspectiveNO,
+
     impact,
     adjoint,
     determinant,
@@ -54,6 +56,8 @@ export {
     getAve,
     getGray,
     invert,
+
+    perspectiveNO,
 
     impact,
     adjoint,

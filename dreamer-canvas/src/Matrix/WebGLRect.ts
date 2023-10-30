@@ -4,7 +4,6 @@ import {
     getRandom,
     getAve,
     matrix3D,
-    frustum,
     perspectiveNO,
 } from "../Common"
 

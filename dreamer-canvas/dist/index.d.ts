@@ -15,5 +15,5 @@ import D3Scale from "./D3Scale";
 import Encryption from "./Encryption";
 import { MatrixImage, MatrixMove, Animation, D3, WebGLRect, GLImage, WebGLTest } from "./Matrix";
 import { Game, GameBG, GameMove } from "./Game";
-import { sleep, runtimeDecorator, getRandom, getAxis, matrix2D, matrix3D, getAve, getGray, invert, impact, adjoint, determinant } from "./Common";
-export { sleep, getRandom, runtimeDecorator, getAxis, matrix2D, matrix3D, getAve, getGray, invert, impact, adjoint, determinant, MoveBall, Hollow, ColorPicker, Monochrome, Binarization, Grayscale, Negative, Clip, ParseGif, Writing, Scale, Html2Png, D3Ball, D3Scale, Encryption, MatrixImage, MatrixMove, WebGLRect, WebGLTest, GLImage, Game, GameBG, GameMove, Animation, D3, };
+import { sleep, runtimeDecorator, getRandom, getAxis, matrix2D, matrix3D, getAve, getGray, invert, perspectiveNO, impact, adjoint, determinant } from "./Common";
+export { sleep, getRandom, runtimeDecorator, getAxis, matrix2D, matrix3D, getAve, getGray, invert, perspectiveNO, impact, adjoint, determinant, MoveBall, Hollow, ColorPicker, Monochrome, Binarization, Grayscale, Negative, Clip, ParseGif, Writing, Scale, Html2Png, D3Ball, D3Scale, Encryption, MatrixImage, MatrixMove, WebGLRect, WebGLTest, GLImage, Game, GameBG, GameMove, Animation, D3, };

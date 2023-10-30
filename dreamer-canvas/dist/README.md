@@ -51,6 +51,9 @@ export default class Parent {
     
     //自定义计算伴随矩阵 A<sup>-1</sup>A<sup>*</sup> = ｜A｜ (逆矩阵 = 伴随矩阵 / 矩阵行列式) 类似使用导数求除法
     export declare const adjoint: (source: number[][]) => number[][];
+
+    //透视矩阵
+    export declare function perspectiveNO(fovy: number, aspect: number, near: number, far: number): number[][];
 ```
 
 

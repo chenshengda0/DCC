@@ -243,7 +243,7 @@ const mat4invert = (source:number[][])=>{
 }
 
 
-export const invert = (source:number[][]) => {
+export const invertNO = (source:number[][]) => {
     switch( true ){
         case source.length === 3 && source[0].length === 3:
             return mat3invert( source );
@@ -397,9 +397,32 @@ export const determinant = function(source:number[][]){
 }
 
 //计算伴随矩阵
-export const adjoint = function(source:number[][]){
-    if( source.length !== source[0].length || source.length < 2 ) throw new Error( "请输入n*n矩阵" )
-    const n = source.length;
+/*
+    param: number[][] 方阵
+    tag: 是否需要转齐次矩阵
+    return: 伴随矩阵
+*/
+export const adjoint = function(param:number[][], tag:boolean = false){
+    let source:number[][];
+    let n:number = 0;
+    if( tag ){
+        if( param.length !== param[0].length && param.length < 1 ) throw new Error( "请输入n*n矩阵" )
+        source = new Proxy( function(){
+            const target = Array.from( {length: param.length + 1}, ()=> Array.from( {length: param.length + 1}, ()=>0 ) )
+            for( let i = 0; i < param.length; ++i ){
+                for( let j = 0; j < param.length; ++j ){
+                    target[i][j] = param[i][j]
+                }
+            }
+            target[param.length][param.length] = 1;
+            return target;
+        }, {apply:(...args)=>Reflect.apply(...args)} )() as unknown as number[][];
+        n = source.length;
+    }else{
+        if( param.length !== param[0].length && param.length < 2 ) throw new Error( "请输入n*n矩阵" )
+        source = param;
+        n = source.length; 
+    }
     switch( true ){
         case n === 2:
             //主对调，副取反
@@ -410,122 +433,113 @@ export const adjoint = function(source:number[][]){
             two[1][1] = source[0][0];
             return two;
         default:
-            const one = Array.from( {length: (n<<1) - 1}, ()=>Array.from( {length: (n<<1) - 1}, ()=>0 ) )
+            const target = Array.from( {length: n}, ()=> Array.from( {length: n}, ()=>0 ) )
             for( let i = 0; i < n; ++i ){
                 for( let j = 0; j < n; ++j ){
-                    one[i][j] = source[i][j]
-                }
-            }
-            for( let i = 0; i < n; ++i ){
-                for( let j = n; j < (n<<1) - 1; ++j ){
-                    one[i][j] = source[i][j % n]
-                }
-            }
-            for( let c = n; c < (n<<1) - 1; ++c ){
-                one[c] = [ ...one[c%n] ]
-            }
-            //console.log( "one: ", one )
-            const target = Array.from( {length: n}, ()=> Array.from( {length: n}, ()=>0 ) )
-            for( let i = 1; i <= n; ++i ){
-                for( let j = 1; j <= n; ++ j ){
-                    const current = Array.from( {length: n -1}, ()=> Array.from( {length: n - 1}, ()=>0 ) )
-                    for( let row = 0; row < n-1; ++row ){
-                        for( let col = 0; col < n-1; ++col ){
-                            current[row][col] = one[i+row][j+col]
+                    target[i][j] = new Proxy( function(row:number , col:number){
+                        const temp = []
+                        //移除当前行
+                        for( let r = 0; r < n; ++r ){
+                            if( r !== row ){
+                                temp.push( [...source[r]] )
+                            }
                         }
-                    }
-                    target[i-1][j-1] = determinant( current )
+                        //转置数组
+                        const ttemp = T( temp );
+                        const tans = [];
+                        for( let c = 0; c < n; ++c ){
+                            if( c !== col ){
+                                tans.push( [...ttemp[c]] )
+                            }
+                        }
+                        const ans = T( tans ) as unknown as number[][];
+                        //返回数组
+                        return (-1) ** (row + col) * determinant( ans );
+                    }, {apply:(...args)=>Reflect.apply(...args)} )( i, j ) as unknown as number;
                 }
             }
-            //console.log( "伴随矩阵", T(target) )
-            return T(target);
+            const res = T( target )
+            return res;
+    }
+
+}
+
+//求逆矩阵
+export const invert = function(param:number[][], tag:boolean = false){
+    let source:number[][];
+    let n:number = 0;
+    if( tag ){
+        if( param.length !== param[0].length && param.length < 1 ) throw new Error( "请输入n*n矩阵" )
+        source = new Proxy( function(){
+            const target = Array.from( {length: param.length + 1}, ()=> Array.from( {length: param.length + 1}, ()=>0 ) )
+            for( let i = 0; i < param.length; ++i ){
+                for( let j = 0; j < param.length; ++j ){
+                    target[i][j] = param[i][j]
+                }
+            }
+            target[param.length][param.length] = 1;
+            return target;
+        }, {apply:(...args)=>Reflect.apply(...args)} )() as unknown as number[][];
+        n = source.length;
+    }else{
+        if( param.length !== param[0].length && param.length < 2 ) throw new Error( "请输入n*n矩阵" )
+        source = param;
+        n = source.length; 
+    }
+    const dete = determinant( source )
+    if( dete === 0 ) return Array.from( {length: source.length}, ()=>Array.from( {length: source.length}, ()=>0 ) )
+    switch( true ){
+        case n === 2:
+            //主对调，副取反
+            const two = Array.from( {length:n}, ()=>Array.from( {length:n}, ()=>0 ) )
+            two[0][0] = source[1][1];
+            two[0][1] = -source[0][1];
+            two[1][0] = -source[1][0];
+            two[1][1] = source[0][0];
+            for( let i = 0; i < two.length; ++i ){
+                for( let j = 0; j < two.length; ++j ){
+                    two[i][j] /= dete;
+                }
+            }
+            return two;
+        default:
+            const target = Array.from( {length: n}, ()=> Array.from( {length: n}, ()=>0 ) )
+            for( let i = 0; i < n; ++i ){
+                for( let j = 0; j < n; ++j ){
+                    target[i][j] = new Proxy( function(row:number , col:number){
+                        const temp = []
+                        //移除当前行
+                        for( let r = 0; r < n; ++r ){
+                            if( r !== row ){
+                                temp.push( [...source[r]] )
+                            }
+                        }
+                        //转置数组
+                        const ttemp = T( temp );
+                        const tans = [];
+                        for( let c = 0; c < n; ++c ){
+                            if( c !== col ){
+                                tans.push( [...ttemp[c]] )
+                            }
+                        }
+                        const ans = T( tans ) as unknown as number[][];
+                        //返回数组
+                        return (-1) ** (row + col) * determinant( ans );
+                    }, {apply:(...args)=>Reflect.apply(...args)} )( i, j ) as unknown as number;
+                }
+            }
+            const res = T( target )
+            for( let i = 0; i < res.length; ++i ){
+                for( let j = 0; j < res.length; ++j ){
+                    res[i][j] /= dete;
+                }
+            }
+            return res;
     }
 
 }
 
 //透视矩阵
-export function frustum(left:number = -180, right:number = 180, bottom:number = -300, top:number = 300, near:number = -200, far:number = 200) {
-    let rl = 1 / (right - left);
-    let tb = 1 / (top - bottom);
-    let nf = 1 / (near - far);
-    const out = Array.from( {length:16}, ()=>0 )
-    out[0] = near * 2 * rl;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = near * 2 * tb;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = (right + left) * rl;
-    out[9] = (top + bottom) * tb;
-    out[10] = (far + near) * nf;
-    out[11] = -1;
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = far * near * 2 * nf;
-    out[15] = 0;
-    //转二维矩阵
-    return new Proxy( function*(){
-        //翻转
-        out.reverse()
-        while( out.length > 0 ){
-            const current = []
-            for( let i = 0; i < 4; ++i ){
-                current.push( out.pop() )
-            }
-            yield current;
-        }
-    }, {
-        apply(...args){
-            const GEN = Reflect.apply( ...args )
-            const ANS = [...GEN]
-            return T(ANS);
-        }
-    } )() as unknown as number[][]
-}
-
-export function orthoNO(left:number, right:number, bottom:number, top:number, near:number, far:number) {
-    const lr = 1 / (left - right);
-    const bt = 1 / (bottom - top);
-    const nf = 1 / (near - far);
-    const out = Array.from( {length:16}, ()=>0 )
-    out[0] = -2 * lr;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = -2 * bt;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[10] = 2 * nf;
-    out[11] = 0;
-    out[12] = (left + right) * lr;
-    out[13] = (top + bottom) * bt;
-    out[14] = (far + near) * nf;
-    out[15] = 1;
-    //转二维矩阵
-    return new Proxy( function*(){
-        //翻转
-        out.reverse()
-        while( out.length > 0 ){
-            const current = []
-            for( let i = 0; i < 4; ++i ){
-                current.push( out.pop() )
-            }
-            yield current;
-        }
-    }, {
-        apply(...args){
-            const GEN = Reflect.apply( ...args )
-            const ANS = [...GEN]
-            return T(ANS);
-        }
-    } )() as unknown as number[][]
-  }
-
 export function perspectiveNO(fovy:number, aspect:number, near:number, far:number) {
     const f = 1.0 / Math.tan(fovy / 2);
     const out = Array.from( {length:16}, ()=>0 )
